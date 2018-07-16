@@ -37,7 +37,7 @@ default = yourspider.settings
 url = http://localhost:6800/
 project = yourspider 
 ```
-将原来的scrapy.cfg中“#url = http://localhost:6800/”中的“#”号去掉
+将原来的scrapy.cfg中“#url = http: //localhost:6800/ ”中的“#”号去掉
 
 **发布爬虫**
 ```
@@ -49,5 +49,5 @@ scrapyd-deploy -p yourspider
 ```
 curl http://localhost:6800/schedule.json -d project=myproject -d spider=spider1
 ```
-启动项目中的spider1，通过http://localhost:6800/jobs可以查看爬虫任务，可以通过日志查看爬虫运行情况。
+启动项目中的spider1，通过http://localhost:6800/jobs 可以查看爬虫任务，可以通过日志查看爬虫运行情况。
 如果需要其他的停止，删除爬虫的API可以查看[Scrapyd JSON API](http://scrapyd.readthedocs.io/en/latest/api.html)
