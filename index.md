@@ -22,31 +22,32 @@ pip install scrapyd
 ```
 pip install scrapyd-client
 ```
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+**运行scrapyd**
 ```
+scrapyd
+```
+ 此时我们可以scrapyd回监听localhost：6800端口，6800端口可以访问。
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+**修改scrapy.cfg**
+```python
+[settings]
+default = yourspider.settings
 
-### Jekyll Themes
+[deploy] 
+url = http://localhost:6800/
+project = yourspider 
+```
+将原来的scrapy.cfg中“#url = http://localhost:6800/”中的“#”号去掉
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/usernamehcx/usernamehcx.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+**发布爬虫**
+```
+scrapyd-deploy -p yourspider
+```
+在项目的根目录执行该命令，scrapyd-deploy会将项目打包为.egg文件，并将打包后的文件部署在scrapyd上
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+**创建爬虫任务**
+```
+curl http://localhost:6800/schedule.json -d project=myproject -d spider=spider1
+```
+启动项目中的spider1，通过http://localhost:6800/jobs可以查看爬虫任务，可以通过日志查看爬虫运行情况。
+如果需要其他的停止，删除爬虫的API可以查看[Scrapyd JSON API](http://scrapyd.readthedocs.io/en/latest/api.html)
